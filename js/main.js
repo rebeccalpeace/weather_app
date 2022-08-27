@@ -1,3 +1,4 @@
+
 {
     let form = document.getElementById('weatherInfo');
     console.log(form);
@@ -8,9 +9,15 @@
         let inputCity = event.target.city.value;
         console.log(inputCity);
         let cityInfo = await getCityInfo(inputCity);
-        let cityImg = await getCityImg(inputCity);
-        buildCityCard(cityInfo, cityImg);
-        
+        if (Object.keys(cityInfo).length === 0){
+            errorDiv = document.createElement('div');
+            errorDiv.className = 'text-center'
+            errorDiv.innerHTML = 'Invalid response. Please enter a city.'
+            document.getElementById('weatherCard').append(errorDiv)
+        } else {
+            let cityImg = await getCityImg(inputCity);
+            buildCityCard(cityInfo, cityImg);
+        }
         event.target.city.value = '';
     }
 
@@ -18,7 +25,12 @@
     async function getCityInfo(city){
         res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${myWeatherKey}`);
         let data = await res.json();
-        return data;
+        if (res.status === 200){
+            return data
+        } else {
+            return {}
+        }
+
     }
 
     async function getCityImg(city){
@@ -33,7 +45,7 @@
         // create a card div
         let card = document.createElement('div');
         card.className = 'card mt-5 mb-3 ms-auto me-auto';
-        card.style = 'width: 75%';
+        card.style = 'width: 75%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
 
         // create inner div
         let innerCard = document.createElement('div');
@@ -48,7 +60,7 @@
         // create image
         let image = document.createElement('img');
         image.className = `img-fluid rounded-start`;
-        image.src = `${cityImg['urls']['small']}`;
+        image.src = `${cityImg['urls']['raw']}&format=auto`;
         imageDiv.append(image);
 
         // create div for weather info
@@ -105,4 +117,8 @@
     }
 
     form.addEventListener('submit', handleSubmit);
+}
+
+{
+
 }
