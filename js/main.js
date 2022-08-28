@@ -11,7 +11,7 @@
         let cityInfo = await getCityInfo(inputCity);
         if (Object.keys(cityInfo).length === 0){
             errorDiv = document.createElement('div');
-            errorDiv.className = 'text-center'
+            errorDiv.className = 'text-center mt-5 fw-bold'
             errorDiv.innerHTML = 'Invalid response. Please enter a city.'
             document.getElementById('weatherCard').append(errorDiv)
         } else {
@@ -45,7 +45,7 @@
         // create a card div
         let card = document.createElement('div');
         card.className = 'card mt-5 mb-3 ms-auto me-auto';
-        card.style = 'width: 75%; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)';
+        card.style = 'width: 75%; border: solid black 3px; box-shadow: 5px 10px #ffc107';
 
         // create inner div
         let innerCard = document.createElement('div');
@@ -55,6 +55,7 @@
         // create image div
         let imageDiv = document.createElement('div');
         imageDiv.className = 'col-md-4';
+        imageDiv.style = 'border-right: solid black 3px;'
         innerCard.append(imageDiv);
 
         // create image
@@ -75,39 +76,39 @@
 
         // create h4 for City name
         let cityHeader = document.createElement('h3');
-        cityHeader.className = 'card-title text-center mt-1 mb-3';
+        cityHeader.className = 'card-title text-center mt-1 mb-3 fw-bold';
         cityHeader.innerHTML = cityInfo['name'];
         cardBody.append(cityHeader);
 
         //create p for description
         let p1 = document.createElement('p');
         p1.className = 'card-text fs-5 mt-1';
-        p1.innerHTML = `Description: ${cityInfo['weather'][0]['description']}`;
+        p1.innerHTML = `<strong>Description:</strong> ${cityInfo['weather'][0]['description']}`;
         cardBody.append(p1);
 
         let p2 = document.createElement('p');
         p2.className = 'card-text fs-5';
-        p2.innerHTML = `Low: ${Math.round(((cityInfo['main']['temp_min']-273.15)*1.8)+32)}\u00B0F`;
+        p2.innerHTML = `<strong>Low:</strong> ${Math.round(((cityInfo['main']['temp_min']-273.15)*1.8)+32)}\u00B0F`;
         cardBody.append(p2);
 
         let p3 = document.createElement('p');
         p3.className = 'card-text fs-5';
-        p3.innerHTML = `High: ${Math.round(((cityInfo['main']['temp_max']-273.15)*1.8)+32)}\u00B0F`;
+        p3.innerHTML = `<strong>High:</strong> ${Math.round(((cityInfo['main']['temp_max']-273.15)*1.8)+32)}\u00B0F`;
         cardBody.append(p3);
 
         let p4 = document.createElement('p');
         p4.className = 'card-text fs-5';
-        p4.innerHTML = `Current: ${Math.round(((cityInfo['main']['temp']-273.15)*1.8)+32)}\u00B0F`;
+        p4.innerHTML = `<strong>Current:</strong> ${Math.round(((cityInfo['main']['temp']-273.15)*1.8)+32)}\u00B0F`;
         cardBody.append(p4);
 
         let p5 = document.createElement('p');
         p5.className = 'card-text fs-5';
-        p5.innerHTML = `Feels like: ${Math.round(((cityInfo['main']['feels_like']-273.15)*1.8)+32)}\u00B0F`;
+        p5.innerHTML = `<strong>Feels like:</strong> ${Math.round(((cityInfo['main']['feels_like']-273.15)*1.8)+32)}\u00B0F`;
         cardBody.append(p5);
 
         let p6 = document.createElement('p');
         p6.className = 'card-text fs-5';
-        p6.innerHTML = `Humidity: ${cityInfo['main']['humidity']}%`;
+        p6.innerHTML = `<strong>Humidity:</strong> ${cityInfo['main']['humidity']}%`;
         cardBody.append(p6);
 
         let display = document.getElementById('weatherCard');
